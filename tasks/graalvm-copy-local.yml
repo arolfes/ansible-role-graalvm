@@ -1,0 +1,17 @@
+---
+- name: check for GraalVM on local box
+  stat:
+    path: '{{ graalvm_local_archive_dir }}/{{ graalvm_redis_filename }}'
+  delegate_to: localhost
+  register: graalvm_local_file
+  ignore_errors: yes
+  become: no
+  when: graalvm_use_local_archive
+
+- name: copy GraalVM from local box
+  become: yes
+  copy:
+    src: '{{ graalvm_local_archive_dir }}/{{ graalvm_redis_filename }}'
+    dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
+    mode: 'u=rw,go=r'
+  when: graalvm_use_local_archive and graalvm_local_file.stat.exists

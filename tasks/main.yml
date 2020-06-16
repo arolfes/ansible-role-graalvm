@@ -1,0 +1,29 @@
+---
+- import_tasks: graalvm.yml
+
+- name: write environment config
+  include_tasks: write-environment-config.yml
+  when: graalvm_is_default_installation
+
+# Set GraalVM facts
+- name: create Ansible facts.d directory
+  become: yes
+  file:
+    state: directory
+    dest: /etc/ansible/facts.d
+    owner: root
+    group: root
+    mode: 'u=rwx,go=rx'
+
+- name: install GraalVM facts
+  become: yes
+  template:
+    src: facts.j2
+    dest: '/etc/ansible/facts.d/{{ graalvm_fact_group_name }}.fact'
+    owner: root
+    group: root
+    mode: 'u=rw,go=r'
+
+- name: re-read facts
+  setup:
+    filter: ansible_local

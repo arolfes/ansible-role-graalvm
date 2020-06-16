@@ -1,0 +1,126 @@
+---
+
+- name: graalvm_major_version
+  debug:
+    var: graalvm_major_version
+
+- name: assert GraalVM major version supported
+  assert:
+    that:
+      - graalvm_major_version in ('19', '20')
+
+- name: graalvm_feature_version
+  debug:
+    var: graalvm_feature_version
+
+- name: assert GraalVM feature version supported
+  assert:
+    that:
+      - graalvm_feature_version in ('0', '1', '2', '3')
+
+- name: graalvm_java_version
+  debug:
+    var: graalvm_java_version
+
+- name: assert java version supported
+  assert:
+    that:
+      - graalvm_java_version in ('8', '11')
+
+- name: create download directory
+  file:
+    state: directory
+    mode: 'u=rwx,go=rx'
+    dest: '{{ graalvm_download_dir }}'
+
+- name: copy local GraalVM
+  include_tasks: graalvm-copy-local.yml
+  when:
+    - graalvm_use_local_archive
+    - graalvm_redis_filename not in (None, '', omit)
+    - graalvm_redis_sha256sum not in (None, '', omit)
+
+- name: load version vars
+  with_first_found:
+    - '../vars/versions/{{ graalvm_version }}-java{{ graalvm_java_version }}.yml'
+  include_vars: '{{ item }}'
+  when: graalvm_redis_sha256sum in (None, '', omit)
+
+- name: assert version vars
+  assert:
+    that: "graalvm_redis_sha256sum not in (None, '')"
+
+- name: graalvm to install
+  debug:
+    msg: graalvm-ce-java{{ graalvm_java_version }}-linux-amd64-{{ graalvm_version }}
+
+- name: check for GraalVM exists in download location
+  stat:
+    path: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
+    checksum_algorithm: sha256
+  register: remote_graalvm_file
+  ignore_errors: yes
+  when: graalvm_redis_filename not in (None, '', omit)
+
+- name: assert existing GraalVM matches checksum
+  assert:
+    that:
+      - remote_graalvm_file.stat.checksum == graalvm_redis_sha256sum
+    msg: 'Checksum failed: {{ remote_graalvm_file.stat.checksum }} != {{ graalvm_redis_sha256sum }}'
+  when: remote_graalvm_file.stat.exists
+
+- name: set download URL var
+  set_fact:
+    graalvm_download_url: '{{ graalvm_github_url }}/{{ graalvm_redis_filename }}'
+  when:
+    - graalvm_redis_mirror in (None, '', omit)
+    - not remote_graalvm_file.stat.exists
+
+- name: set download URL var for mirror
+  set_fact:
+    graalvm_download_url: '{{ graalvm_redis_mirror }}/{{ graalvm_redis_filename }}'
+  when:
+    - graalvm_redis_mirror not in (None, '', omit)
+    - not remote_graalvm_file.stat.exists
+
+- name: download GraalVM
+  get_url:
+    url: '{{ graalvm_download_url }}'
+    dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
+    checksum: 'sha256:{{ graalvm_redis_sha256sum }}'
+    force: no
+    timeout: '{{ graalvm_download_timeout_seconds }}'
+    mode: 'u=rw,go=r'
+  when: not remote_graalvm_file.stat.exists
+
+- name: create GraalVM home directory
+  become: yes
+  file:
+    path: '{{ graalvm_home }}'
+    state: directory
+    owner: root
+    group: root
+    mode: 'u=rwx,go=rx'
+
+- name: install unarchive module dependencies (apt, yum, dnf, zypper)
+  become: yes
+  package:
+    name:
+      - tar
+      - gzip
+      - unzip
+    state: present
+  when: ansible_pkg_mgr in ('apt', 'yum', 'dnf', 'zypper')
+
+- name: install GraalVM
+  become: yes
+  unarchive:
+    src: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
+    extra_opts:
+      - "--strip-components=1"
+    dest: '{{ graalvm_home }}'
+    creates: '{{ graalvm_home }}/bin/java'
+    copy: no
+    owner: root
+    group: root
+    mode: 'go-w'

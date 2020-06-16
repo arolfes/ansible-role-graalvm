@@ -1,0 +1,9 @@
+#!/bin/sh
+
+{{ ansible_managed | comment }}
+
+export GRAALVM_HOME='{{ graalvm_home }}'
+
+{% if graalvm_add_to_path is defined and graalvm_add_to_path is sameas true %}
+export PATH=${GRAALVM_HOME}/bin:${PATH}
+{% endif %}

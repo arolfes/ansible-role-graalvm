@@ -1,0 +1,29 @@
+---
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../graalvm-min-online/playbook.yml
+  lint:
+    name: ansible-lint
+
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+lint:
+  name: yamllint
+
+platforms:
+  - name: ansible-role-graalvm-default
+    image: ubuntu:18.04
+
+scenario:
+  name: default
+
+verifier:
+  name: testinfra
+  directory: ../graalvm-min/tests
+  lint:
+    name: flake8
