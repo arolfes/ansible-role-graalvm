@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: graalvm
   author: Alexander Rolfes
   description: Role for installing the GraalVM CE.
   license: MIT
@@ -12,6 +13,5 @@ galaxy_info:
   galaxy_tags:
     - graalvm
     - development
-    - web
     - system
 dependencies: []
