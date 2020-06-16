@@ -25,8 +25,8 @@
       graalvm_java_version: '8'
       graalvm_version: '19.3.2'
       graalvm_use_local_archive: true
-      java_redis_filename: 'graalvm-19.3.2-java8.tar.gz'
-      java_redis_sha256sum: '7598364ed9c4e5c0f936f37275172e84218984f25f51685ac2f501ac1a2d43bf'
+      graalvm_redis_filename: 'graalvm-19.3.2-java8.tar.gz'
+      graalvm_redis_sha256sum: '7598364ed9c4e5c0f936f37275172e84218984f25f51685ac2f501ac1a2d43bf'
 
   post_tasks:
     - name: verify graalvm facts
