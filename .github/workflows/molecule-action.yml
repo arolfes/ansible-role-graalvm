@@ -12,7 +12,6 @@ jobs:
   test:
     name: ubuntu-max-graalvm-min-online
     runs-on: ubuntu-latest
-    container: openjdk:8-jdk
     steps:
       - uses: actions/checkout@v2
       - name: Grant execute permission for moleculew
