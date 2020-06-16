@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+lint:
+  name: yamllint
+
+platforms:
+  - name: ansible-role-graalvm-ubuntu-max
+    image: ubuntu:20.04
+    dockerfile: ../default/Dockerfile.j2
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../graalvm-max-online/playbook.yml
+  lint:
+    name: ansible-lint
+
+scenario:
+  name: ubuntu-max-graalvm-max-online
+
+verifier:
+  name: testinfra
+  directory: ../graalvm-max/tests
+  lint:
+    name: flake8
