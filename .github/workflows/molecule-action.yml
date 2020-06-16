@@ -10,8 +10,14 @@ on:
       - master
 jobs:
   test:
-    name: ubuntu-max-graalvm-min-online
+    name: ${{ matrix.os }}-${{ matrix.graalvm }}
     runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-min', 'ubuntu-max']
+        graalvm: ['graalvm-min-online', 'graalvm-max-online']
+
     steps:
       - uses: actions/checkout@v2
       - name: Grant execute permission for moleculew
@@ -20,6 +26,6 @@ jobs:
         run: ./moleculew wrapper-install
       - name: Display versions
         run: ./moleculew wrapper-versions
-      - name: execute molecule scenario 'DEFAULT'
-        run: ./moleculew test
+      - name: execute molecule scenario '${{ matrix.os }}-${{ matrix.graalvm }}'
+        run: ./moleculew test --scenario-name=${{ matrix.os }}-${{ matrix.graalvm }}
         
