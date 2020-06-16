@@ -87,6 +87,16 @@ graalvm_fact_group_name: graalvm
 graalvm_download_timeout_seconds: 600
 ```
 
+Supported GraalVM Versions
+--------------------------
+
+The following versions of GraalVM are supported without any additional configuration for java 8 and java 11
+
+* 19.3.2
+* 20.0.0
+* 20.1.0
+
+
 Example Playbooks
 -----------------
 
@@ -96,6 +106,11 @@ By default this role will install the latest GraalVM CE that has been tested and
 - hosts: servers
   roles:
     - role: arolfes.graalvm
+# results:
+# new file /etc/profile.d/graalvm.sh
+# content:
+# GRAALVM_HOME=/opt/graalvm/graalvm-20.1.0-java11
+# PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
 install an older version
