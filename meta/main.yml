@@ -10,6 +10,20 @@ galaxy_info:
       versions:
         - bionic
         - focal
+    - name: Debian
+      versions:
+        - jessie
+        - buster
+    - name: Fedora
+      versions:
+        - 31
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: opensuse
+      versions:
+        - 15.1
   galaxy_tags:
     - graalvm
     - development

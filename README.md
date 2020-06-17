@@ -26,6 +26,28 @@ Requirements
             * Focal (20.04)
             * Bionic (18.04)
 
+        * Debian
+
+            * Stretch (9)
+            * Buster (10)
+
+    * RedHat Family
+
+        * CentOS
+
+            * 7
+            * 8
+
+        * Fedora
+
+            * 31
+
+    * SUSE Family
+
+        * openSUSE
+
+            * 15.1
+
     * Note: other versions are likely to work but have not been tested.
 
 Role Variables
@@ -92,6 +114,9 @@ Supported GraalVM Versions
 
 The following versions of GraalVM are supported without any additional configuration for java 8 and java 11
 
+* 19.3.0
+* 19.3.0.2
+* 19.3.1
 * 19.3.2
 * 20.0.0
 * 20.1.0
