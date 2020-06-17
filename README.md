@@ -148,17 +148,22 @@ install an older version
       graalvm_version: '19.3.2'
 ```
 
-install 2 GraalVMs one based on jdk8 and one based on 11 and set 11 as default
+If you don't want GraalVM in your Path variable set `graalvm_add_to_path` to `false`
 
 ```yaml
 - hosts: servers
   roles:
     - role: arolfes.graalvm
-      graalvm_java_version: '8'
-      graalvm_is_default_installation: false
-      graalvm_fact_group_name: 'graalvm-java8'
+      graalvm_add_to_path: false
+```
 
+if you don't want an `/etc/profile.d/graalvm.sh` file 
+
+```yaml
+- hosts: servers
+  roles:
     - role: arolfes.graalvm
+      graalvm_is_default_installation: false
 ```
 
 You can install the multiple versions of the GraalVM by using this role more than once:
@@ -166,11 +171,13 @@ You can install the multiple versions of the GraalVM by using this role more tha
 ```yaml
 - hosts: servers
   roles:
+    # the first role install graalvm-ce-java8-linux-amd64-20.1.0
     - role: arolfes.graalvm
       graalvm_java_version: '8'
       graalvm_is_default_installation: false
       graalvm_fact_group_name: 'graalvm-java8'
 
+    # the second role install graalvm-ce-java11-linux-amd64-20.1.0 and is set as default GraalVM
     - role: arolfes.graalvm
 ```
 
