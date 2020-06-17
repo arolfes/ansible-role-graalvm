@@ -92,6 +92,9 @@ Supported GraalVM Versions
 
 The following versions of GraalVM are supported without any additional configuration for java 8 and java 11
 
+* 19.3.0
+* 19.3.0.2
+* 19.3.1
 * 19.3.2
 * 20.0.0
 * 20.1.0
