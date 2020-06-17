@@ -29,6 +29,18 @@ jobs:
     - env:
         - MOLECULE_SCENARIO=ubuntu-max-graalvm-max-offline
         - MOLECULEW_ANSIBLE=2.9.9
+    - env:
+        - MOLECULE_SCENARIO=debian-min-graalvm-min-online
+        - MOLECULEW_ANSIBLE=2.8.2
+    - env:
+        - MOLECULE_SCENARIO=debian-min-graalvm-max-online
+        - MOLECULEW_ANSIBLE=2.8.2
+    - env:
+        - MOLECULE_SCENARIO=debian-max-graalvm-min-offline
+        - MOLECULEW_ANSIBLE=2.9.9
+    - env:
+        - MOLECULE_SCENARIO=debian-max-graalvm-max-offline
+        - MOLECULEW_ANSIBLE=2.9.9
 
 # Require Ubuntu 20.04
 dist: focal
