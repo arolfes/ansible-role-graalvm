@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+lint:
+  name: yamllint
+
+platforms:
+  - name: ansible-role-graalvm-centos-max
+    image: centos:8
+    dockerfile: ../default/Dockerfile.j2
+
+provisioner:
+  name: ansible
+  playbooks:
+    converge: ../graalvm-min-offline/playbook.yml
+  lint:
+    name: ansible-lint
+
+scenario:
+  name: centos-max-graalvm-min-offline
+
+verifier:
+  name: testinfra
+  directory: ../graalvm-min/tests
+  lint:
+    name: flake8
