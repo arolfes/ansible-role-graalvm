@@ -10,6 +10,10 @@ galaxy_info:
       versions:
         - bionic
         - focal
+    - name: Debian
+      versions:
+        - jessie
+        - buster
   galaxy_tags:
     - graalvm
     - development

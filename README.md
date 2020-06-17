@@ -26,6 +26,11 @@ Requirements
             * Focal (20.04)
             * Bionic (18.04)
 
+        * Debian
+
+            * Stretch (9)
+            * Buster (10)
+
     * Note: other versions are likely to work but have not been tested.
 
 Role Variables
