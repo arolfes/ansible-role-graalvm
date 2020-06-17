@@ -31,6 +31,23 @@ Requirements
             * Stretch (9)
             * Buster (10)
 
+    * RedHat Family
+
+        * CentOS
+
+            * 7
+            * 8
+
+        * Fedora
+
+            * 31
+
+    * SUSE Family
+
+        * openSUSE
+
+            * 15.1
+
     * Note: other versions are likely to work but have not been tested.
 
 Role Variables
