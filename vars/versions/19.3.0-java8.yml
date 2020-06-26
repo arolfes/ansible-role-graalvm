@@ -1,2 +1,2 @@
 # SHA256 sum for the redistributable package
-graalvm_redis_sha256sum: '4442d3dfade1175f6905106757929113f1e74bc5c50156dc6a70c04759ac2660'
+redis_sha256sum: '4442d3dfade1175f6905106757929113f1e74bc5c50156dc6a70c04759ac2660'

@@ -59,6 +59,9 @@ jobs:
     - env:
         - MOLECULE_SCENARIO=centos-max-graalvm-max-offline
         - MOLECULEW_ANSIBLE=2.9.9
+    - env:
+        - MOLECULE_SCENARIO=fedora-graalvm-two-times
+        - MOLECULEW_ANSIBLE=2.9.9
 
 # Require Ubuntu 20.04
 dist: focal

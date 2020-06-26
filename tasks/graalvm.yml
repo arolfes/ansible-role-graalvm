@@ -43,7 +43,13 @@
 - name: load version vars
   with_first_found:
     - '../vars/versions/{{ graalvm_version }}-java{{ graalvm_java_version }}.yml'
+    - '../vars/versions/default.yml'
   include_vars: '{{ item }}'
+  when: graalvm_redis_sha256sum in (None, '', omit)
+
+- name: set graalvm_redis_sha256sum variable
+  set_fact:
+    graalvm_redis_sha256sum: "{{ redis_sha256sum }}"
   when: graalvm_redis_sha256sum in (None, '', omit)
 
 - name: assert version vars
@@ -83,7 +89,7 @@
     - graalvm_redis_mirror not in (None, '', omit)
     - not remote_graalvm_file.stat.exists
 
-- name: download GraalVM
+- name: "download GraalVM {{ graalvm_redis_filename }}"
   get_url:
     url: '{{ graalvm_download_url }}'
     dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
@@ -102,7 +108,7 @@
     group: root
     mode: 'u=rwx,go=rx'
 
-- name: install unarchive module dependencies (apt, yum, dnf, zypper)
+- name: install unarchive module dependencies (tar, gzip, unzip)
   become: yes
   package:
     name:

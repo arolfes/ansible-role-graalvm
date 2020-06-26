@@ -27,3 +27,7 @@
 - name: re-read facts
   setup:
     filter: ansible_local
+
+- name: clear facts
+  set_fact:
+    graalvm_redis_sha256sum:
