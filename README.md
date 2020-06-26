@@ -10,8 +10,6 @@ Role to install the GraalVM CE.
 
 **Important:** This ansible role is based on [GANTSIGN ansible-role-java](https://github.com/gantsign/ansible-role-java)
 
-**Thanks** a lot to John and Gantsign for providing molecule wrapper script and awesome ansible roles which are available over ansible-galaxy.
-
 Requirements
 ------------
 
@@ -253,6 +251,12 @@ License
 -------
 
 MIT
+
+Credits
+-------
+
+**Many Thanks** to John from Gantsign for providing molecule wrapper script and awesome ansible roles which are available over ansible-galaxy.
+
 
 Author Information
 ------------------
