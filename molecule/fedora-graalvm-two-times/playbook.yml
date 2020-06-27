@@ -1,0 +1,32 @@
+---
+- name: Converge
+  hosts: all
+
+  roles:
+    - role: ansible-role-graalvm
+      graalvm_java_version: '8'
+      graalvm_is_default_installation: false
+      graalvm_fact_group_name: 'graalvmjava8'
+
+    - role: ansible-role-graalvm
+
+  post_tasks:
+    - name: verify graalvm facts
+      assert:
+        that:
+          - ansible_local.graalvmjava8.general.version is defined
+          - ansible_local.graalvmjava8.general.java_version is defined
+          - ansible_local.graalvmjava8.general.home is defined
+
+    - name: verify graalvm facts
+      assert:
+        that:
+          - ansible_local.graalvm.general.version is defined
+          - ansible_local.graalvm.general.java_version is defined
+          - ansible_local.graalvm.general.home is defined
+
+    - name: install find - required for tests (dnf)
+      dnf:
+        name: findutils
+        state: present
+      when: ansible_pkg_mgr == 'dnf'
