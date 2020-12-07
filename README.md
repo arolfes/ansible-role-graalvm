@@ -1,7 +1,7 @@
 Ansible Role: GraalVM
 =====================
 
-[![Build Status](https://travis-ci.org/arolfes/ansible-role-graalvm.svg?branch=master)](https://travis-ci.org/github/arolfes/ansible-role-graalvm)
+[![Build Status](https://github.com/arolfes/ansible-role-graalvm/workflows/moleculemolecule%20tests/badge.svg?branch=master)](https://github.com/arolfes/ansible-role-graalvm/actions?query=branch%3Amaster+workflow%3A%22molecule+tests%22)
 [![Ansible Galaxy](https://img.shields.io/badge/ansible--galaxy-arolfes.graalvm-blue.svg)](https://galaxy.ansible.com/arolfes/graalvm)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/arolfes/ansible-role-graalvm/master/LICENSE)
 
