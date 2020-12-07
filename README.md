@@ -119,7 +119,7 @@ The following versions of GraalVM are supported without any additional configura
 * 20.0.0
 * 20.1.0
 * 20.2.0
-* 20.3.0
+* 20.3.0 and following (it checks the sha256sum against provided sha256sum file from github)
 
 Example Playbooks
 -----------------

@@ -8,7 +8,7 @@ on:
       - '!master'   # excludes master  pull_request:
   pull_request:
     branches:
-      - main
+      - 'master'
 
 jobs:
   molecule:
