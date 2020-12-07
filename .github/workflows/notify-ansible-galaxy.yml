@@ -1,0 +1,16 @@
+---
+name: molecule tests
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  notify-ansible-galaxy:
+    steps:
+# https://stackoverflow.com/a/63220716
+      - name: notify ansible galaxy (only for push tags)
+        uses: joelwmale/webhook-action@master
+        with:
+          url: https://galaxy.ansible.com/api/v1/notifications/
