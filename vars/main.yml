@@ -13,3 +13,7 @@ graalvm_github_url: "https://github.com/graalvm/graalvm-ce-builds/releases/downl
 
 # The root folder of this GraalVM installation
 graalvm_home: "{{ graalvm_install_dir }}/graalvm-{{ graalvm_version }}-java{{ graalvm_java_version }}"
+
+graalvm_redis_sha256sum_url: ''
+
+redis_sha256sum: ''

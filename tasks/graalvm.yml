@@ -47,14 +47,12 @@
   include_vars: '{{ item }}'
   when: graalvm_redis_sha256sum in (None, '', omit)
 
-- name: set graalvm_redis_sha256sum variable
+- name: set graalvm_redis_sha256sum variable from vars dir
   set_fact:
-    graalvm_redis_sha256sum: "{{ redis_sha256sum }}"
-  when: graalvm_redis_sha256sum in (None, '', omit)
-
-- name: assert version vars
-  assert:
-    that: "graalvm_redis_sha256sum not in (None, '')"
+    graalvm_redis_sha256sum: '{{ redis_sha256sum }}'
+  when:
+    - graalvm_redis_sha256sum in (None, '', "", omit)
+    - redis_sha256sum not in (None, '', "", omit)
 
 - name: graalvm to install
   debug:
@@ -68,19 +66,43 @@
   ignore_errors: yes
   when: graalvm_redis_filename not in (None, '', omit)
 
-- name: assert existing GraalVM matches checksum
-  assert:
-    that:
-      - remote_graalvm_file.stat.checksum == graalvm_redis_sha256sum
-    msg: 'Checksum failed: {{ remote_graalvm_file.stat.checksum }} != {{ graalvm_redis_sha256sum }}'
-  when: remote_graalvm_file.stat.exists
-
 - name: set download URL var
   set_fact:
     graalvm_download_url: '{{ graalvm_github_url }}/{{ graalvm_redis_filename }}'
   when:
     - graalvm_redis_mirror in (None, '', omit)
     - not remote_graalvm_file.stat.exists
+
+- name: set sha256 download URL var for mirror
+  set_fact:
+    graalvm_redis_sha256sum_url: '{{ graalvm_redis_mirror }}/{{ graalvm_redis_filename }}.sha256'
+  when:
+    - graalvm_redis_sha256sum in (None, '', "", omit)
+    - graalvm_redis_mirror not in (None, '', "", omit)
+
+- name: set sha256 download URL var for github
+  set_fact:
+    graalvm_redis_sha256sum_url: '{{ graalvm_github_url }}/{{ graalvm_redis_filename }}.sha256'
+  when:
+    - graalvm_redis_sha256sum in (None, '', "", omit)
+    - graalvm_redis_mirror in (None, '', "", omit)
+
+- name: fetch checksum
+  include_tasks: graalvm-checksum.yml
+  when:
+    - graalvm_redis_sha256sum in (None, '', omit)
+    - graalvm_redis_sha256sum_url not in (None, '', omit)
+
+- name: assert sha256sum variable is not empty
+  assert:
+    that: "graalvm_redis_sha256sum not in (None, '')"
+
+- name: assert existing GraalVM matches checksum
+  assert:
+    that:
+      - remote_graalvm_file.stat.checksum == graalvm_redis_sha256sum
+    msg: 'Checksum failed: {{ remote_graalvm_file.stat.checksum }} != {{ graalvm_redis_sha256sum }}'
+  when: remote_graalvm_file.stat.exists
 
 - name: set download URL var for mirror
   set_fact:
