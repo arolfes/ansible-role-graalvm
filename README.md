@@ -8,8 +8,6 @@ Ansible Role: GraalVM
 
 Role to install the GraalVM CE.
 
-**Important:** This ansible role is based on [GANTSIGN ansible-role-java](https://github.com/gantsign/ansible-role-java)
-
 Requirements
 ------------
 
@@ -116,9 +114,12 @@ The following versions of GraalVM are supported without any additional configura
 * 19.3.0.2
 * 19.3.1
 * 19.3.2
+* 19.3.3
+* 19.3.4
 * 20.0.0
 * 20.1.0
-
+* 20.2.0
+* 20.3.0
 
 Example Playbooks
 -----------------
@@ -132,7 +133,7 @@ By default this role will install the latest GraalVM CE that has been tested and
 # results:
 # new file /etc/profile.d/graalvm.sh
 # content:
-# GRAALVM_HOME=/opt/graalvm/graalvm-20.1.0-java11
+# GRAALVM_HOME=/opt/graalvm/graalvm-20.3.0-java11
 # PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
@@ -202,7 +203,7 @@ This role exports the following Ansible facts for use by other roles:
 
 * `ansible_local.graalvm.general.version`
 
-    * e.g. `20.1.0`
+    * e.g. `20.3.0`
 
 * `ansible_local.graalvm.general.java_version`
 
@@ -210,7 +211,7 @@ This role exports the following Ansible facts for use by other roles:
 
 * `ansible_local.graalvm.general.home`
 
-    * e.g. `/opt/graalvm/graalvm-20.1.0-java11`
+    * e.g. `/opt/graalvm/graalvm-20.3.0-java11`
 
 Overriding `graalvm_fact_group_name` will change the names of the facts e.g.:
 
