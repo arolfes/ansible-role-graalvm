@@ -1,0 +1,23 @@
+---
+- name: download checksum
+  get_url:
+    url: '{{ graalvm_redis_sha256sum_url }}'
+    dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}.sha256'
+    force: no
+    timeout: '{{ graalvm_download_timeout_seconds }}'
+    mode: 'u=rw,go=r'
+  when:
+    - graalvm_redis_sha256sum in (None, '', omit)
+
+- name: read checksum file
+  slurp:
+    src: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}.sha256'
+  register: graalvm_checksum_file
+  when:
+    - graalvm_redis_sha256sum in (None, '', omit)
+
+- name: set graalvm checksum var from file
+  set_fact:
+    graalvm_redis_sha256sum: "{{ graalvm_checksum_file.content | b64decode | regex_replace('^([0-9a-f]+).*', '\\1') | trim }}"
+  when:
+    - graalvm_redis_sha256sum in (None, '', omit)

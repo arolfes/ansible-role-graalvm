@@ -3,7 +3,7 @@
 graalvm_java_version: '11'
 
 # GraalVM version number
-graalvm_version: '20.1.0'
+graalvm_version: '20.3.0'
 
 # Base installation directory for any GraalVM distribution
 graalvm_install_dir: '/opt/graalvm'
