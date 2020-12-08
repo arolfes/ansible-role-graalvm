@@ -1,5 +1,5 @@
 ---
-name: molecule tests
+name: notify new version
 
 on:
   push:
@@ -8,9 +8,9 @@ on:
 
 jobs:
   notify-ansible-galaxy:
+    runs-on: ubuntu-latest
     steps:
-# https://stackoverflow.com/a/63220716
-      - name: notify ansible galaxy (only for push tags)
-        uses: joelwmale/webhook-action@master
-        with:
-          url: https://galaxy.ansible.com/api/v1/notifications/
+    - uses: actions/checkout@v2
+    - uses: robertdebock/galaxy-action@1.1.0
+      with:
+        galaxy_api_key: ${{ secrets.GALAXY_API_KEY }} 
