@@ -7,7 +7,7 @@
 - name: assert GraalVM major version supported
   assert:
     that:
-      - graalvm_major_version in ('19', '20')
+      - graalvm_major_version in ('19', '20', '21')
 
 - name: graalvm_feature_version
   debug:
