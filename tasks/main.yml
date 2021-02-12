@@ -1,4 +1,15 @@
 ---
+
+- name: load architecture variables
+  with_first_found:
+    - '../vars/architectures/{{ ansible_architecture }}.yml'
+    - '../vars/architectures/default.yml'
+  include_vars: '{{ item }}'
+
+- name: set grallvm filename
+  set_fact:
+    graalvm_redis_filename: "graalvm-ce-java{{ graalvm_java_version }}-linux-{{ graalvm_architecture }}-{{ graalvm_version }}.tar.gz"
+
 - import_tasks: graalvm.yml
 
 - name: write environment config
