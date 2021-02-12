@@ -56,7 +56,7 @@
 
 - name: graalvm to install
   debug:
-    msg: graalvm-ce-java{{ graalvm_java_version }}-linux-amd64-{{ graalvm_version }}
+    msg: graalvm_redis_filename
 
 - name: check for GraalVM exists in download location
   stat:
