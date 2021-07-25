@@ -121,7 +121,12 @@ The following versions of GraalVM are supported without any additional configura
 * 20.2.0
 * 20.3.0 and following (it checks the sha256sum against provided sha256sum file from github)
 * 20.3.1
+* 20.3.2
+* 20.3.3
 * 21.0.0
+* 21.0.0.2
+* 21.1.0
+* 21.2.0
 
 Example Playbooks
 -----------------
@@ -135,7 +140,7 @@ By default this role will install the latest GraalVM CE that has been tested and
 # results:
 # new file /etc/profile.d/graalvm.sh
 # content:
-# GRAALVM_HOME=/opt/graalvm/graalvm-21.0.0-java11
+# GRAALVM_HOME=/opt/graalvm/graalvm-21.2.0-java11
 # PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
@@ -172,13 +177,13 @@ You can install the multiple versions of the GraalVM by using this role more tha
 ```yaml
 - hosts: servers
   roles:
-    # the first role install graalvm-ce-java8-linux-amd64-21.0.0
+    # the first role install graalvm-ce-java8-linux-amd64-21.2.0
     - role: arolfes.graalvm
       graalvm_java_version: '8'
       graalvm_is_default_installation: false
       graalvm_fact_group_name: 'graalvm-java8'
 
-    # the second role install graalvm-ce-java11-linux-amd64-21.0.0 and is set as default GraalVM
+    # the second role install graalvm-ce-java11-linux-amd64-21.2.0 and is set as default GraalVM
     - role: arolfes.graalvm
 ```
 
