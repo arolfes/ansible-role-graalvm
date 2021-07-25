@@ -1,9 +1,9 @@
 # specify the underlying java version
-# 8 or 11
+# 8 or 11 or 16
 graalvm_java_version: '11'
 
 # GraalVM version number
-graalvm_version: '21.0.0'
+graalvm_version: '21.2.0'
 
 # Base installation directory for any GraalVM distribution
 graalvm_install_dir: '/opt/graalvm'
