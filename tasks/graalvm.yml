@@ -25,7 +25,7 @@
 - name: assert java version supported
   assert:
     that:
-      - graalvm_java_version in ('8', '11')
+      - graalvm_java_version in ('8', '11', '16')
 
 - name: create download directory
   file:
