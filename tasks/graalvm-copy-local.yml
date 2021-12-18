@@ -6,7 +6,7 @@
   register: graalvm_local_file
   ignore_errors: yes
   become: no
-  when: graalvm_use_local_archive
+  when: graalvm_use_local_archive|bool
 
 - name: copy GraalVM from local box
   become: yes
@@ -14,4 +14,4 @@
     src: '{{ graalvm_local_archive_dir }}/{{ graalvm_redis_filename }}'
     dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
     mode: 'u=rw,go=r'
-  when: graalvm_use_local_archive and graalvm_local_file.stat.exists
+  when: graalvm_use_local_archive|bool and graalvm_local_file.stat.exists

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+
+for d in molecule/*/ ; do
+    d=$(echo ${d#molecule/})
+    scenario=$(echo $d | sed 's:/*$::')
+    if [[ "$scenario" == 'graalvm-max' ]] || [[ "$scenario" == 'graalvm-max-offline' ]] || [[ "$scenario" == 'graalvm-max-online' ]] || [[ "$scenario" == 'graalvm-min' ]] || [[ "$scenario" == 'graalvm-min-offline' ]] || [[ "$scenario" == 'graalvm-min-online' ]] ; then
+        continue
+    fi
+    echo "** Running Scenario '$scenario' **"
+    ./moleculew test --scenario-name=$scenario
+done

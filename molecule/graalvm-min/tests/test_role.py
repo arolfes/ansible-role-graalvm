@@ -19,13 +19,16 @@ def test_java_tools(host, command):
 
     cmd = host.run('. /etc/profile && ' + command + ' -version')
     assert cmd.rc == 0
-    assert ' 1.8.0_' in cmd.stderr
+
+    if command == 'javac':
+        assert ' 11.0.' in cmd.stdout
     if command == 'java':
-        assert 'GraalVM CE 19.3.2' in cmd.stderr
+        assert ' 11.0.' in cmd.stderr
+        assert 'GraalVM CE 19.3.0' in cmd.stderr
 
 
 @pytest.mark.parametrize('version_dir_pattern', [
-    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[8,11]+$'
+    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[11,17]+$'
 ])
 def test_graalvm_installed(host, version_dir_pattern):
 

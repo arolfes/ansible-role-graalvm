@@ -2,7 +2,7 @@
 provisioner:
   name: ansible
   playbooks:
-    converge: ../graalvm-min-online/playbook.yml
+    converge: ../graalvm-max-online/playbook.yml
   lint:
     name: ansible-lint
 
@@ -24,6 +24,6 @@ scenario:
 
 verifier:
   name: testinfra
-  directory: ../graalvm-min/tests
+  directory: ../graalvm-max/tests
   lint:
     name: flake8

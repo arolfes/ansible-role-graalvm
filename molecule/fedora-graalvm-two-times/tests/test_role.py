@@ -21,16 +21,16 @@ def test_java_tools(host, command):
     cmd = host.run('. /etc/profile && ' + command + ' --version')
     assert cmd.rc == 0
     if command == 'gu':
-        assert 'GraalVM Updater 21.2.0' in cmd.stdout
+        assert 'GraalVM Updater 21.3.0' in cmd.stdout
     else:
-        assert ' 11.0.12' in cmd.stdout
+        assert '17.0.1' in cmd.stdout
         if command == 'java':
-            assert 'GraalVM CE 21.2.0' in cmd.stdout
+            assert 'GraalVM CE 21.3.0' in cmd.stdout
 
 
 @pytest.mark.parametrize('version_dir_pattern', [
-    'graalvm-[0-9]+.[0-9]+.[0-9]+-java8$',
-    'graalvm-[0-9]+.[0-9]+.[0-9]+-java11$'
+    'graalvm-[0-9]+.[0-9]+.[0-9]+-java11$',
+    'graalvm-[0-9]+.[0-9]+.[0-9]+-java17$'
 ])
 def test_graalvm_installed(host, version_dir_pattern):
 
@@ -53,7 +53,7 @@ def test_graalvm_installed(host, version_dir_pattern):
 
 @pytest.mark.parametrize('fact_group_name', [
     'graalvm',
-    'graalvmjava8'
+    'graalvmjava11'
 ])
 def test_facts_installed(host, fact_group_name):
     fact_file = host.file('/etc/ansible/facts.d/' + fact_group_name + '.fact')

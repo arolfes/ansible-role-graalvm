@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: 'u=rwx,go=rx'
-  when: graalvm_is_default_installation
+  when: graalvm_is_default_installation|bool
 
 - name: export GRAALVM_HOME and add to PATH
   become: yes
@@ -25,4 +25,4 @@
     owner: root
     group: root
     mode: 'u=rw,go=r'
-  when: graalvm_is_default_installation
+  when: graalvm_is_default_installation|bool

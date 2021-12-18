@@ -14,7 +14,7 @@
 
 - name: write environment config
   include_tasks: write-environment-config.yml
-  when: graalvm_is_default_installation
+  when: graalvm_is_default_installation|bool
 
 # Set GraalVM facts
 - name: create Ansible facts.d directory
