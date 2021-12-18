@@ -25,7 +25,7 @@
 - name: assert java version supported
   assert:
     that:
-      - graalvm_java_version in ('8', '11', '16')
+      - graalvm_java_version in ('11', '17')
 
 - name: create download directory
   file:
@@ -36,7 +36,7 @@
 - name: copy local GraalVM
   include_tasks: graalvm-copy-local.yml
   when:
-    - graalvm_use_local_archive
+    - graalvm_use_local_archive|bool
     - graalvm_redis_filename not in (None, '', omit)
     - graalvm_redis_sha256sum not in (None, '', omit)
 

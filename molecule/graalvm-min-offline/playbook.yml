@@ -12,8 +12,8 @@
 
     - name: download GraalVM for offline install
       get_url:
-        url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.2/graalvm-ce-java8-linux-amd64-19.3.2.tar.gz"
-        dest: '{{ graalvm_local_archive_dir }}/graalvm-19.3.2-java8.tar.gz'
+        url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-19.3.0/graalvm-ce-java11-linux-amd64-19.3.0.tar.gz"
+        dest: '{{ graalvm_local_archive_dir }}/graalvm-19.3.0-java11.tar.gz'
         force: no
         timeout: '{{ graalvm_download_timeout_seconds }}'
         mode: 'u=rw,go=r'
@@ -22,11 +22,11 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '8'
-      graalvm_version: '19.3.2'
+      graalvm_java_version: '11'
+      graalvm_version: '19.3.0'
       graalvm_use_local_archive: true
-      graalvm_redis_filename: 'graalvm-19.3.2-java8.tar.gz'
-      graalvm_redis_sha256sum: '7598364ed9c4e5c0f936f37275172e84218984f25f51685ac2f501ac1a2d43bf'
+      graalvm_redis_filename: 'graalvm-19.3.0-java11.tar.gz'
+      graalvm_redis_sha256sum: '238c5c21bb4aa292caf95b2aca592ce8c1be2f036d93af48cd865f67d558f907'
 
   post_tasks:
     - name: verify graalvm facts

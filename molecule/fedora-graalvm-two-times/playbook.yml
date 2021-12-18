@@ -4,9 +4,9 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '8'
+      graalvm_java_version: '11'
       graalvm_is_default_installation: false
-      graalvm_fact_group_name: 'graalvmjava8'
+      graalvm_fact_group_name: 'graalvmjava11'
 
     - role: ansible-role-graalvm
 
@@ -14,9 +14,9 @@
     - name: verify graalvm facts
       assert:
         that:
-          - ansible_local.graalvmjava8.general.version is defined
-          - ansible_local.graalvmjava8.general.java_version is defined
-          - ansible_local.graalvmjava8.general.home is defined
+          - ansible_local.graalvmjava11.general.version is defined
+          - ansible_local.graalvmjava11.general.java_version is defined
+          - ansible_local.graalvmjava11.general.home is defined
 
     - name: verify graalvm facts
       assert:

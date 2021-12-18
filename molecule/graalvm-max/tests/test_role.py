@@ -21,15 +21,15 @@ def test_java_tools(host, command):
     cmd = host.run('. /etc/profile && ' + command + ' --version')
     assert cmd.rc == 0
     if command == 'gu':
-        assert 'GraalVM Updater 21.0.0' in cmd.stdout
+        assert 'GraalVM Updater 21.3.0' in cmd.stdout
     else:
-        assert ' 11.0.10' in cmd.stdout
+        assert ' 17.0.1' in cmd.stdout
         if command == 'java':
-            assert 'GraalVM CE 21.0.0' in cmd.stdout
+            assert 'GraalVM CE 21.3.0' in cmd.stdout
 
 
 @pytest.mark.parametrize('version_dir_pattern', [
-    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[8,11]+$'
+    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[11,17]+$'
 ])
 def test_graalvm_installed(host, version_dir_pattern):
 
