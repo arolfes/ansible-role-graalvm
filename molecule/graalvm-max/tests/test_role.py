@@ -23,7 +23,7 @@ def test_java_tools(host, command):
     if command == 'gu':
         assert 'GraalVM Updater 22.1.0' in cmd.stdout
     else:
-        assert ' 17.0.1' in cmd.stdout
+        assert ' 17.0.3' in cmd.stdout
         if command == 'java':
             assert 'GraalVM CE 22.1.0' in cmd.stdout
 

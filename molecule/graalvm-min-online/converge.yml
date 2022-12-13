@@ -2,10 +2,17 @@
 - name: Converge
   hosts: all
 
+  pre_tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+      changed_when: no
+      when: ansible_pkg_mgr == 'apt'
+
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '17'
-      graalvm_version: '22.1.0'
+      graalvm_java_version: '11'
+      graalvm_version: '19.3.0'
 
   post_tasks:
     - name: verify graalvm facts

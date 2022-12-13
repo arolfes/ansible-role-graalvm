@@ -1,44 +1,45 @@
 ---
 
-- name: load architecture variables
+- name: Load architecture variables
   with_first_found:
     - '../vars/architectures/{{ ansible_architecture }}.yml'
     - '../vars/architectures/default.yml'
-  include_vars: '{{ item }}'
+  ansible.builtin.include_vars: '{{ item }}'
 
-- name: set grallvm filename
-  set_fact:
+- name: Set grallvm filename
+  ansible.builtin.set_fact:
     graalvm_redis_filename: "graalvm-ce-java{{ graalvm_java_version }}-linux-{{ graalvm_architecture }}-{{ graalvm_version }}.tar.gz"
 
-- import_tasks: graalvm.yml
+- name: Install GraalVM
+  ansible.builtin.import_tasks: graalvm.yml
 
-- name: write environment config
-  include_tasks: write-environment-config.yml
+- name: Write environment config
+  ansible.builtin.include_tasks: write-environment-config.yml
   when: graalvm_is_default_installation|bool
 
 # Set GraalVM facts
-- name: create Ansible facts.d directory
+- name: Create Ansible facts.d directory
   become: yes
-  file:
+  ansible.builtin.file:
     state: directory
     dest: /etc/ansible/facts.d
     owner: root
     group: root
     mode: 'u=rwx,go=rx'
 
-- name: install GraalVM facts
+- name: Install GraalVM facts
   become: yes
-  template:
+  ansible.builtin.template:
     src: facts.j2
     dest: '/etc/ansible/facts.d/{{ graalvm_fact_group_name }}.fact'
     owner: root
     group: root
     mode: 'u=rw,go=r'
 
-- name: re-read facts
-  setup:
+- name: Re-read facts
+  ansible.builtin.setup:
     filter: ansible_local
 
-- name: clear facts
-  set_fact:
+- name: Clear facts
+  ansible.builtin.set_fact:
     graalvm_redis_sha256sum:

@@ -17,10 +17,6 @@ jobs:
       matrix:
         scenarios:
           - default
-          - centos-max-graalvm-max-offline
-          - centos-max-graalvm-min-offline
-          - centos-min-graalvm-max-online
-          - centos-min-graalvm-min-online
           - debian-max-graalvm-max-offline
           - debian-max-graalvm-min-offline
           - debian-min-graalvm-max-online
@@ -38,12 +34,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.x
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: 3.8
 
       - name: Use Cache
-        uses: actions/cache@v3.0.2
+        uses: actions/cache@v3.0.11
         with:
           path: ~/.cache/pipenv
           key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
