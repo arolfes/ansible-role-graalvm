@@ -1,6 +1,6 @@
 ---
-- name: check for GraalVM on local box
-  stat:
+- name: Check for GraalVM on local box
+  ansible.builtin.stat:
     path: '{{ graalvm_local_archive_dir }}/{{ graalvm_redis_filename }}'
   delegate_to: localhost
   register: graalvm_local_file
@@ -8,9 +8,9 @@
   become: no
   when: graalvm_use_local_archive|bool
 
-- name: copy GraalVM from local box
+- name: Copy GraalVM from local box
   become: yes
-  copy:
+  ansible.builtin.copy:
     src: '{{ graalvm_local_archive_dir }}/{{ graalvm_redis_filename }}'
     dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}'
     mode: 'u=rw,go=r'

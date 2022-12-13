@@ -5,20 +5,21 @@ dependency:
 driver:
   name: docker
 
-lint:
-  name: yamllint
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+  flake8
 
 platforms:
   - name: ansible-role-graalvm-debian-max
-    image: debian:10
+    image: debian:11
     dockerfile: ../default/Dockerfile.j2
 
 provisioner:
   name: ansible
   playbooks:
-    converge: ../graalvm-min-offline/playbook.yml
-  lint:
-    name: ansible-lint
+    converge: ../graalvm-min-offline/converge.yml
 
 scenario:
   name: debian-max-graalvm-min-offline
@@ -26,5 +27,3 @@ scenario:
 verifier:
   name: testinfra
   directory: ../graalvm-min/tests
-  lint:
-    name: flake8

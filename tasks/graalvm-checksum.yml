@@ -1,6 +1,6 @@
 ---
-- name: download checksum
-  get_url:
+- name: Download checksum
+  ansible.builtin.get_url:
     url: '{{ graalvm_redis_sha256sum_url }}'
     dest: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}.sha256'
     force: no
@@ -9,15 +9,15 @@
   when:
     - graalvm_redis_sha256sum in (None, '', omit)
 
-- name: read checksum file
-  slurp:
+- name: Read checksum file
+  ansible.builtin.slurp:
     src: '{{ graalvm_download_dir }}/{{ graalvm_redis_filename }}.sha256'
   register: graalvm_checksum_file
   when:
     - graalvm_redis_sha256sum in (None, '', omit)
 
-- name: set graalvm checksum var from file
-  set_fact:
+- name: Set graalvm checksum var from file
+  ansible.builtin.set_fact:
     graalvm_redis_sha256sum: "{{ graalvm_checksum_file.content | b64decode | regex_replace('^([0-9a-f]+).*', '\\1') | trim }}"
   when:
     - graalvm_redis_sha256sum in (None, '', omit)

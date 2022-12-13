@@ -2,21 +2,28 @@
 - name: Converge
   hosts: all
 
+  pre_tasks:
+    - name: update apt cache
+      apt:
+        update_cache: yes
+      changed_when: no
+      when: ansible_pkg_mgr == 'apt'
+
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '11'
-      graalvm_version: '19.3.0'
+      graalvm_java_version: '17'
+      graalvm_version: '22.1.0'
 
   post_tasks:
-    - name: verify graalvm facts
-      assert:
+    - name: Verify graalvm facts
+      ansible.builtin.assert:
         that:
           - ansible_local.graalvm.general.version is defined
           - ansible_local.graalvm.general.java_version is defined
           - ansible_local.graalvm.general.home is defined
 
-    - name: install find - required for tests (dnf)
-      dnf:
+    - name: Install find - required for tests (dnf)
+      ansible.builtin.dnf:
         name: findutils
         state: present
       when: ansible_pkg_mgr == 'dnf'
