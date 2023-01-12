@@ -25,7 +25,7 @@
 - name: Assert java version supported
   ansible.builtin.assert:
     that:
-      - graalvm_java_version in ('11', '17')
+      - graalvm_java_version in ('11', '17', '19')
 
 - name: Create download directory
   ansible.builtin.file:

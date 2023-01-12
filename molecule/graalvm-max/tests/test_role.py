@@ -23,13 +23,13 @@ def test_java_tools(host, command):
     if command == 'gu':
         assert 'GraalVM Updater 22.3.0' in cmd.stdout
     else:
-        assert ' 17.0.5' in cmd.stdout
+        assert ' 19.0.1' in cmd.stdout
         if command == 'java':
             assert 'GraalVM CE 22.3.0' in cmd.stdout
 
 
 @pytest.mark.parametrize('version_dir_pattern', [
-    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[11,17]+$'
+    'graalvm-[0-9]+.[0-9]+.[0-9]+-java[11,17,19]+$'
 ])
 def test_graalvm_installed(host, version_dir_pattern):
 
