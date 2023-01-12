@@ -51,7 +51,7 @@ are shown below):
 
 ```yaml
 # specify the underlying java version
-# 11 or 17
+# 11 or 17 or 19
 graalvm_java_version: '17'
 
 # GraalVM version number
@@ -83,7 +83,7 @@ graalvm_redis_sha256sum:
 
 # location for GraalVM download (e.g. https://example.com/provisioning/files)
 # specify only when NOT downloading from directly github
-graalvm_redis_mirror: 
+graalvm_redis_mirror:
 
 # File name for the GraalVM redistributable installation file
 graalvm_redis_filename: "graalvm-ce-java{{ graalvm_java_version }}-linux-amd64-{{ graalvm_version }}.tar.gz"
@@ -174,7 +174,7 @@ If you don't want GraalVM in your Path variable set `graalvm_add_to_path` to `fa
       graalvm_add_to_path: false
 ```
 
-if you don't want an `/etc/profile.d/graalvm.sh` file 
+if you don't want an `/etc/profile.d/graalvm.sh` file
 
 ```yaml
 - hosts: servers

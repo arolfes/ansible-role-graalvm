@@ -11,7 +11,7 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '17'
+      graalvm_java_version: '19'
       graalvm_version: '22.3.0'
 
   post_tasks:
