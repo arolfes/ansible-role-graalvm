@@ -55,7 +55,7 @@ are shown below):
 graalvm_java_version: '17'
 
 # GraalVM version number
-graalvm_version: '22.3.0'
+graalvm_version: '22.3.1'
 
 # Base installation directory for any GraalVM distribution
 graalvm_install_dir: '/opt/graalvm'
@@ -132,6 +132,7 @@ The following versions of GraalVM are supported without any additional configura
 * 22.0.0.2
 * 22.1.0
 * 22.3.0
+* 22.3.1
 
 Supported architectures
 -----------------------
@@ -151,7 +152,7 @@ By default this role will install the latest GraalVM CE that has been tested and
 # results:
 # new file /etc/profile.d/graalvm.sh
 # content:
-# GRAALVM_HOME=/opt/graalvm/graalvm-22.3.0-java17
+# GRAALVM_HOME=/opt/graalvm/graalvm-22.3.1-java17
 # PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
@@ -188,13 +189,13 @@ You can install the multiple versions of the GraalVM by using this role more tha
 ```yaml
 - hosts: servers
   roles:
-    # the first role install graalvm-ce-java11-linux-amd64-22.3.0
+    # the first role install graalvm-ce-java11-linux-amd64-22.3.1
     - role: arolfes.graalvm
       graalvm_java_version: '11'
       graalvm_is_default_installation: false
       graalvm_fact_group_name: 'graalvm-java11'
 
-    # the second role install graalvm-ce-java17-linux-amd64-22.3.0 and is set as default GraalVM
+    # the second role install graalvm-ce-java17-linux-amd64-22.3.1 and is set as default GraalVM
     - role: arolfes.graalvm
 ```
 
@@ -221,7 +222,7 @@ This role exports the following Ansible facts for use by other roles:
 
 * `ansible_local.graalvm.general.version`
 
-    * e.g. `22.3.0`
+    * e.g. `22.3.1`
 
 * `ansible_local.graalvm.general.java_version`
 
@@ -229,7 +230,7 @@ This role exports the following Ansible facts for use by other roles:
 
 * `ansible_local.graalvm.general.home`
 
-    * e.g. `/opt/graalvm/graalvm-22.3.0-java17`
+    * e.g. `/opt/graalvm/graalvm-22.3.1-java17`
 
 Overriding `graalvm_fact_group_name` will change the names of the facts e.g.:
 
