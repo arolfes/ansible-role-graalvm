@@ -12,7 +12,7 @@
   roles:
     - role: ansible-role-graalvm
       graalvm_java_version: '19'
-      graalvm_version: '22.3.0'
+      graalvm_version: '22.3.1'
 
   post_tasks:
     - name: Verify graalvm facts
