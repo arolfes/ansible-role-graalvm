@@ -4,9 +4,9 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '11'
+      graalvm_java_version: '17.0.7'
       graalvm_is_default_installation: false
-      graalvm_fact_group_name: 'graalvmjava11'
+      graalvm_fact_group_name: 'graalvm_java_17'
 
     - role: ansible-role-graalvm
 
@@ -14,16 +14,18 @@
     - name: verify graalvm facts
       assert:
         that:
-          - ansible_local.graalvmjava11.general.version is defined
-          - ansible_local.graalvmjava11.general.java_version is defined
-          - ansible_local.graalvmjava11.general.home is defined
+          - ansible_local.graalvm_java_17.general.java_version is defined
+          - ansible_local.graalvm_java_17.general.java_version is version('17.0.7', '==')
+          - ansible_local.graalvm_java_17.general.home is defined
+          - ansible_local.graalvm_java_17.general.home is match ('/opt/graalvm/jdk-17.0.7')
 
     - name: verify graalvm facts
       assert:
         that:
-          - ansible_local.graalvm.general.version is defined
           - ansible_local.graalvm.general.java_version is defined
+          - ansible_local.graalvm.general.java_version is version('21.0.0', '==')
           - ansible_local.graalvm.general.home is defined
+          - ansible_local.graalvm.general.home is match ('/opt/graalvm/jdk-21.0.0')
 
     - name: install find - required for tests (dnf)
       dnf:

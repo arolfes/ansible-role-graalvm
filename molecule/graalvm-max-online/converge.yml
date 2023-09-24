@@ -11,16 +11,15 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '19'
-      graalvm_version: '22.3.1'
 
   post_tasks:
     - name: Verify graalvm facts
       ansible.builtin.assert:
         that:
-          - ansible_local.graalvm.general.version is defined
           - ansible_local.graalvm.general.java_version is defined
+          - ansible_local.graalvm.general.java_version is version('21.0.0', '==')
           - ansible_local.graalvm.general.home is defined
+          - ansible_local.graalvm.general.home is match ('/opt/graalvm/jdk-21.0.0')
 
     - name: Install find - required for tests (dnf)
       ansible.builtin.dnf:

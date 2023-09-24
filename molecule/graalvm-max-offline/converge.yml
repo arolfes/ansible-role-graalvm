@@ -18,8 +18,8 @@
 
     - name: download GraalVM for offline install
       get_url:
-        url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-22.3.1/graalvm-ce-java19-linux-amd64-22.3.1.tar.gz"
-        dest: '{{ graalvm_local_archive_dir }}/graalvm-22.3.1-java19.tar.gz'
+        url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-21.0.0/graalvm-community-jdk-21.0.0_linux-x64_bin.tar.gz"
+        dest: '{{ graalvm_local_archive_dir }}/graalvm-ce-jdk-21.0.0.tar.gz'
         force: no
         timeout: '{{ graalvm_download_timeout_seconds }}'
         mode: 'u=rw,go=r'
@@ -27,22 +27,19 @@
 
   roles:
     - role: ansible-role-graalvm
-      graalvm_java_version: '19'
-      graalvm_version: '22.3.1'
+      graalvm_java_version: '21.0.0'
       graalvm_use_local_archive: true
-      graalvm_redis_filename: 'graalvm-22.3.1-java19.tar.gz'
-      graalvm_redis_sha256sum: '7cd99d805e7a8b7d4c4576802fb107fb862944e47ce5f2e4f37c0f469a70dd2f'
+      graalvm_redis_filename: 'graalvm-ce-jdk-21.0.0.tar.gz'
+      graalvm_redis_sha256sum: '6c422941ccc58be5b891bb6499feeb72cd2b74d6729a29bf1fb8cc1a7d58b319'
 
   post_tasks:
     - name: verify graalvm facts
       assert:
         that:
-          - ansible_local.graalvm.general.version is defined
-          - ansible_local.graalvm.general.version is version('22.3.1', '==')
           - ansible_local.graalvm.general.java_version is defined
-          - ansible_local.graalvm.general.java_version is version('19', '==')
+          - ansible_local.graalvm.general.java_version is version('21.0.0', '==')
           - ansible_local.graalvm.general.home is defined
-          - ansible_local.graalvm.general.home is match ('/opt/graalvm/graalvm-22.3.1-java19')
+          - ansible_local.graalvm.general.home is match ('/opt/graalvm/jdk-21.0.0')
 
     - name: install find - required for tests (dnf)
       dnf:

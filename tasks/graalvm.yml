@@ -1,23 +1,5 @@
 ---
 
-- name: Graalvm_major_version
-  ansible.builtin.debug:
-    var: graalvm_major_version
-
-- name: Assert GraalVM major version supported
-  ansible.builtin.assert:
-    that:
-      - graalvm_major_version in ('19', '20', '21', '22')
-
-- name: Graalvm_feature_version
-  ansible.builtin.debug:
-    var: graalvm_feature_version
-
-- name: Assert GraalVM feature version supported
-  ansible.builtin.assert:
-    that:
-      - graalvm_feature_version in ('0', '1', '2', '3')
-
 - name: Graalvm_java_version
   ansible.builtin.debug:
     var: graalvm_java_version
@@ -25,7 +7,16 @@
 - name: Assert java version supported
   ansible.builtin.assert:
     that:
-      - graalvm_java_version in ('11', '17', '19')
+      - graalvm_java_version in ('17.0.7', '17.0.7', '20.0.1', '20.0.2', '21.0.0')
+
+- name: graalvm_architecture
+  ansible.builtin.debug:
+    var: graalvm_architecture
+
+- name: Assert architecture supported
+  ansible.builtin.assert:
+    that:
+      - graalvm_architecture in ('x64', 'arch64')
 
 - name: Create download directory
   ansible.builtin.file:
@@ -42,7 +33,7 @@
 
 - name: Load version vars
   with_first_found:
-    - '../vars/versions/{{ graalvm_version }}-java{{ graalvm_java_version }}.yml'
+    - '../vars/versions/{{ graalvm_java_version }}_{{ graalvm_architecture }}.yml'
     - '../vars/versions/default.yml'
   ansible.builtin.include_vars: '{{ item }}'
   when: graalvm_redis_sha256sum in (None, '', omit)
@@ -73,25 +64,27 @@
     - graalvm_redis_mirror in (None, '', omit)
     - not remote_graalvm_file.stat.exists
 
-- name: Set sha256 download URL var for mirror
-  ansible.builtin.set_fact:
-    graalvm_redis_sha256sum_url: '{{ graalvm_redis_mirror }}/{{ graalvm_redis_filename }}.sha256'
-  when:
-    - graalvm_redis_sha256sum in (None, '', "", omit)
-    - graalvm_redis_mirror not in (None, '', "", omit)
-
-- name: Set sha256 download URL var for github
-  ansible.builtin.set_fact:
-    graalvm_redis_sha256sum_url: '{{ graalvm_github_url }}/{{ graalvm_redis_filename }}.sha256'
-  when:
-    - graalvm_redis_sha256sum in (None, '', "", omit)
-    - graalvm_redis_mirror in (None, '', "", omit)
-
-- name: Fetch checksum
-  ansible.builtin.include_tasks: graalvm-checksum.yml
-  when:
-    - graalvm_redis_sha256sum in (None, '', omit)
-    - graalvm_redis_sha256sum_url not in (None, '', omit)
+# Currently the github download page don't provide sha256 files.
+# I hope they community brings it back in the future
+#- name: Set sha256 download URL var for mirror
+#  ansible.builtin.set_fact:
+#    graalvm_redis_sha256sum_url: '{{ graalvm_redis_mirror }}/{{ graalvm_redis_filename }}.sha256'
+#  when:
+#    - graalvm_redis_sha256sum in (None, '', "", omit)
+#    - graalvm_redis_mirror not in (None, '', "", omit)
+#
+#- name: Set sha256 download URL var for github
+#  ansible.builtin.set_fact:
+#    graalvm_redis_sha256sum_url: '{{ graalvm_github_url }}/{{ graalvm_redis_filename }}.sha256'
+#  when:
+#    - graalvm_redis_sha256sum in (None, '', "", omit)
+#    - graalvm_redis_mirror in (None, '', "", omit)
+#
+#- name: Fetch checksum
+#  ansible.builtin.include_tasks: graalvm-checksum.yml
+#  when:
+#    - graalvm_redis_sha256sum in (None, '', omit)
+#    - graalvm_redis_sha256sum_url not in (None, '', omit)
 
 - name: Assert sha256sum variable is not empty
   ansible.builtin.assert:
