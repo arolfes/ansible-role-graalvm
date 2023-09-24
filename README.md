@@ -19,27 +19,32 @@ Requirements
 
         * Ubuntu
 
-            * Bionic (18.04)
             * Focal (20.04)
             * jammy (22.04)
 
         * Debian
 
-            * Stretch (9)
             * Buster (10)
             * bullseye (11)
+            * bookworm (12)
 
     * RedHat Family
 
         * Fedora
 
             * 37
+            * 38
 
     * SUSE Family
 
         * openSUSE
 
+            * 15.0
             * 15.1
+            * 15.2
+            * 15.3
+            * 15.4
+            * 15.5
 
     * Note: other versions are likely to work but have not been tested.
 
@@ -50,12 +55,9 @@ The following variables will change the behavior of this role (default values
 are shown below):
 
 ```yaml
-# specify the underlying java version
-# 11 or 17 or 19
-graalvm_java_version: '17'
-
-# GraalVM version number
-graalvm_version: '22.3.1'
+# specify the underlying community jdk version
+# 17.0.7, 17.0.8, 20.0.1, 20.0.2 or 21.0.0
+graalvm_java_version: '21.0.0'
 
 # Base installation directory for any GraalVM distribution
 graalvm_install_dir: '/opt/graalvm'
@@ -67,7 +69,7 @@ graalvm_download_dir: "{{ x_ansible_download_dir | default(ansible_env.HOME + '/
 # the GRAALVM_HOME environment variable
 graalvm_is_default_installation: true
 
-# If this graalvm bin director should be add to PATH environment variable
+# If the graalvm bin directory should be added to PATH environment variable
 # Effect is only when this is also the default installation
 graalvm_add_to_path: true
 
@@ -86,58 +88,40 @@ graalvm_redis_sha256sum:
 graalvm_redis_mirror:
 
 # File name for the GraalVM redistributable installation file
-graalvm_redis_filename: "graalvm-ce-java{{ graalvm_java_version }}-linux-amd64-{{ graalvm_version }}.tar.gz"
+graalvm_redis_filename: "graalvm-community-jdk-{{ graalvm_java_version }}_linux-{{ graalvm_architecture }}_bin.tar.gz"
 
 # Name of the group of Ansible facts relating this GraalVM installation.
 #
 # Override if you want use this role more than once to install multiple versions
 # of GraalVM.
 #
-# e.g. graalvm_fact_group_name: graalvm_19.3
+# e.g. graalvm_fact_group_name: graalvm_20_0_2
 # would change the GraalVM home fact to:
-# ansible_local.graalvm_19.3.general.home
+# ansible_local.graalvm_20_0_2.general.home
 graalvm_fact_group_name: graalvm
 
 # Timeout for GraalVM download response in seconds
 graalvm_download_timeout_seconds: 600
 
-# choose the underlying architecture, amd64 or arch64
-graalvm_architecture: 'amd64'
+# choose the underlying architecture, x64 (means amd64) or arch64
+graalvm_architecture: 'x64'
 ```
 
 Supported GraalVM Versions
 --------------------------
 
-The following versions of GraalVM are supported without any additional configuration for java 8 and java 11
+The following versions of graalvm community jdk are supported without any additional configuration
 
-* 19.3.0
-* 19.3.0.2
-* 19.3.1
-* 19.3.2
-* 19.3.3
-* 19.3.4
-* 20.0.0
-* 20.1.0
-* 20.2.0
-* 20.3.0 and following (it checks the sha256sum against provided sha256sum file from github)
-* 20.3.1
-* 20.3.2
-* 20.3.3
+* 17.0.7
+* 17.0.8
+* 20.0.1
+* 20.0.2
 * 21.0.0
-* 21.0.0.2
-* 21.1.0
-* 21.2.0
-* 21.3.0
-* 21.3.2
-* 22.0.0.2
-* 22.1.0
-* 22.3.0
-* 22.3.1
 
 Supported architectures
 -----------------------
 
-* amd64
+* x64 (means amd64)
 * aarch64
 
 Example Playbooks
@@ -152,7 +136,7 @@ By default this role will install the latest GraalVM CE that has been tested and
 # results:
 # new file /etc/profile.d/graalvm.sh
 # content:
-# GRAALVM_HOME=/opt/graalvm/graalvm-22.3.1-java17
+# GRAALVM_HOME=/opt/graalvm/jdk-21.0.0
 # PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
@@ -162,8 +146,7 @@ install an older version
 - hosts: servers
   roles:
     - role: arolfes.graalvm
-      graalvm_java_version: '11'
-      graalvm_version: '19.3.2'
+      graalvm_java_version: '17.0.7'
 ```
 
 If you don't want GraalVM in your Path variable set `graalvm_add_to_path` to `false`
@@ -189,13 +172,13 @@ You can install the multiple versions of the GraalVM by using this role more tha
 ```yaml
 - hosts: servers
   roles:
-    # the first role install graalvm-ce-java11-linux-amd64-22.3.1
+    # the first role install graalvm-community-jdk-17.0.7
     - role: arolfes.graalvm
-      graalvm_java_version: '11'
+      graalvm_java_version: '17.0.7'
       graalvm_is_default_installation: false
-      graalvm_fact_group_name: 'graalvm-java11'
+      graalvm_fact_group_name: 'graalvm_java_17_0_7'
 
-    # the second role install graalvm-ce-java17-linux-amd64-22.3.1 and is set as default GraalVM
+    # the second role install graalvm-community-jdk-21.0.0 and is set as default GraalVM
     - role: arolfes.graalvm
 ```
 
@@ -203,15 +186,14 @@ To perform an offline install, you need to specify a bit more information (i.e. 
 
 ```yaml
 # Before performing the offline install, download
-# `graalvm-ce-java8-linux-amd64-19.3.2.tar.gz` to
+# `graalvm-community-jdk-21.0.0_linux-x64_bin.tar.gz` to
 # `{{ playbook_dir }}/files/` on the local machine.
 - hosts: servers
   roles:
     - role: arolfes.graalvm
-      graalvm_java_version: '11'
-      graalvm_version: '19.3.2'
+      graalvm_java_version: '21.0.0'
       graalvm_use_local_archive: true
-      graalvm_redis_filename: 'graalvm-19.3.2-java11.tar.gz'
+      graalvm_redis_filename: 'graalvm-community-jdk-21.0.0_linux-x64_bin.tar.gz'
       graalvm_redis_sha256sum: '7627a40c11341f743e3d937efe4fd3115b18bb3ca39380513b31d6775512d5b0'
 ```
 
@@ -220,29 +202,25 @@ Role Facts
 
 This role exports the following Ansible facts for use by other roles:
 
-* `ansible_local.graalvm.general.version`
-
-    * e.g. `22.3.1`
-
 * `ansible_local.graalvm.general.java_version`
 
-    * e.g. `17`
+    * e.g. `21.0.0`
 
 * `ansible_local.graalvm.general.home`
 
-    * e.g. `/opt/graalvm/graalvm-22.3.1-java17`
+    * e.g. `/opt/graalvm/jdk-21.0.0`
 
 Overriding `graalvm_fact_group_name` will change the names of the facts e.g.:
 
 ```yaml
-graalvm_fact_group_name: graalvm_java11
+graalvm_fact_group_name: graalvm_java_21_0_0
 ```
 
 Would change the name of the facts to:
 
-* `ansible_local.graalvm_java11.general.version`
-* `ansible_local.graalvm_java11.general.java_version`
-* `ansible_local.graalvm_java11.general.home`
+* `ansible_local.graalvm_java_21_0_0.general.version`
+* `ansible_local.graalvm_java_21_0_0.general.java_version`
+* `ansible_local.graalvm_java_21_0_0.general.home`
 
 Development & Testing
 ---------------------
@@ -289,4 +267,3 @@ Author Information
 ------------------
 
 Alexander Rolfes
-Novatec Consulting GmbH

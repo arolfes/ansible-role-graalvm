@@ -1,18 +1,9 @@
 ---
-# GraalVM Major version number
-graalvm_major_version: "{{ graalvm_version | regex_replace('^([0-9]+).*', '\\1') }}"
-
-# GraalVM feature version number
-graalvm_feature_version: "{{ graalvm_version | regex_replace('^\\d+.([0-3]){1}.*', '\\1') }}"
-
-# sub download path
-graalvm_download_version_path: "vm-{{ graalvm_version | regex_replace('^([0-9]+.[0-3].[0-9]+)*', '\\1') }}"
-
 # graalvm github url
-graalvm_github_url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/{{ graalvm_download_version_path }}"
+graalvm_github_url: "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-{{ graalvm_java_version }}"
 
 # The root folder of this GraalVM installation
-graalvm_home: "{{ graalvm_install_dir }}/graalvm-{{ graalvm_version }}-java{{ graalvm_java_version }}"
+graalvm_home: "{{ graalvm_install_dir }}/jdk-{{ graalvm_java_version }}"
 
 graalvm_redis_sha256sum_url: ''
 

@@ -3,7 +3,7 @@ galaxy_info:
   role_name: graalvm
   namespace: arolfes
   author: Alexander Rolfes
-  description: Role for installing the GraalVM CE.
+  description: Role for installing the graalvm community jdk.
   license: MIT
   min_ansible_version: '2.12'
   platforms:

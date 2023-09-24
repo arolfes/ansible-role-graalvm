@@ -1,14 +1,8 @@
 ---
 
-- name: Load architecture variables
-  with_first_found:
-    - '../vars/architectures/{{ ansible_architecture }}.yml'
-    - '../vars/architectures/default.yml'
-  ansible.builtin.include_vars: '{{ item }}'
-
 - name: Set grallvm filename
   ansible.builtin.set_fact:
-    graalvm_redis_filename: "graalvm-ce-java{{ graalvm_java_version }}-linux-{{ graalvm_architecture }}-{{ graalvm_version }}.tar.gz"
+    graalvm_redis_filename: "graalvm-community-jdk-{{ graalvm_java_version }}_linux-{{ graalvm_architecture }}_bin.tar.gz"
 
 - name: Install GraalVM
   ansible.builtin.import_tasks: graalvm.yml
