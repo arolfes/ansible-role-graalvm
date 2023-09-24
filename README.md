@@ -11,7 +11,7 @@ Role to install the GraalVM CE.
 Requirements
 ------------
 
-* Ansible >= 2.8
+* Ansible >= 5 (Ansible Core >= 2.12)
 
 * Linux Distribution
 

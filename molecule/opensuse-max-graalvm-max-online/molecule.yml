@@ -13,7 +13,7 @@ lint: |
 
 platforms:
   - name: ansible-role-graalvm-opensuse
-    image: opensuse/leap:15.1
+    image: opensuse/leap:15.5
 
 provisioner:
   name: ansible
@@ -21,7 +21,7 @@ provisioner:
     converge: ../graalvm-max-online/converge.yml
 
 scenario:
-  name: opensuse-graalvm-max-online
+  name: opensuse-max-graalvm-max-online
 
 verifier:
   name: testinfra

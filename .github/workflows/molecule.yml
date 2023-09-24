@@ -21,9 +21,10 @@ jobs:
           - debian-max-graalvm-min-offline
           - debian-min-graalvm-max-online
           - debian-min-graalvm-min-online
-          - fedora-graalvm-max-online
-          - fedora-graalvm-two-times
-          - opensuse-graalvm-max-online
+          - fedora-max-graalvm-max-online
+          - fedora-min-graalvm-two-times
+          - opensuse-max-graalvm-max-online
+          - opensuse-min-graalvm-max-online
           - ubuntu-max-graalvm-max-offline
           - ubuntu-max-graalvm-max-online
           - ubuntu-max-graalvm-min-offline

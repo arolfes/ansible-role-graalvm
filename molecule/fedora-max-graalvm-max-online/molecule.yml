@@ -13,7 +13,7 @@ lint: |
 
 platforms:
   - name: ansible-role-graalvm-fedora
-    image: fedora:37
+    image: fedora:39
 
 provisioner:
   name: ansible
@@ -21,7 +21,7 @@ provisioner:
     converge: ../graalvm-max-online/converge.yml
 
 scenario:
-  name: fedora-graalvm-max-online
+  name: fedora-max-graalvm-max-online
 
 verifier:
   name: testinfra

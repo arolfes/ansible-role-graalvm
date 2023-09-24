@@ -12,16 +12,16 @@ lint: |
   flake8
 
 platforms:
-  - name: ansible-role-graalvm-debian-max
-    image: debian:12
+  - name: ansible-role-graalvm-opensuse
+    image: opensuse/leap:15.0
 
 provisioner:
   name: ansible
   playbooks:
-    converge: ../graalvm-max-offline/converge.yml
+    converge: ../graalvm-max-online/converge.yml
 
 scenario:
-  name: debian-max-graalvm-max-offline
+  name: opensuse-min-graalvm-max-online
 
 verifier:
   name: testinfra

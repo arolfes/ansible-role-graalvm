@@ -21,7 +21,7 @@ provisioner:
     converge: converge.yml
 
 scenario:
-  name: fedora-graalvm-two-times
+  name: fedora-min-graalvm-two-times
 
 verifier:
   name: testinfra
