@@ -253,7 +253,8 @@ install_ansible() {
 install_molecule() {
     banner "Installing Molecule $MOLECULE_VERSION into virtualenv $VIRTUAL_ENV"
 
-    pip install "molecule[docker]==$MOLECULE_VERSION"
+    pip install "molecule==$MOLECULE_VERSION"
+    pip install "molecule-plugins[docker]"
     echo ''
 }
 
