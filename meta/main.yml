@@ -20,7 +20,6 @@ galaxy_info:
       versions:
         - 37
         - 38
-        - 39
     - name: opensuse
       versions:
         - 15.0

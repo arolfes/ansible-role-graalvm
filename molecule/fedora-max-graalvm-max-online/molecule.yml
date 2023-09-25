@@ -13,7 +13,7 @@ lint: |
 
 platforms:
   - name: ansible-role-graalvm-fedora
-    image: fedora:39
+    image: fedora:38
 
 provisioner:
   name: ansible

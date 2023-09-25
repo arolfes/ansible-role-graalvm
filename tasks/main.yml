@@ -18,11 +18,16 @@
   when: graalvm_is_default_installation|bool
 
 # Set GraalVM facts
+- name: Set fact_path variable if not configured
+  ansible.builtin.set_fact:
+    fact_path: '/etc/ansible/facts.d'
+  when: fact_path is undefined
+
 - name: Create Ansible facts.d directory
   become: yes
   ansible.builtin.file:
     state: directory
-    dest: /etc/ansible/facts.d
+    dest: "{{ fact_path }}"
     owner: root
     group: root
     mode: 'u=rwx,go=rx'
@@ -31,13 +36,14 @@
   become: yes
   ansible.builtin.template:
     src: facts.j2
-    dest: '/etc/ansible/facts.d/{{ graalvm_fact_group_name }}.fact'
+    dest: '{{ fact_path }}/{{ graalvm_fact_group_name }}.fact'
     owner: root
     group: root
     mode: 'u=rw,go=r'
 
 - name: Re-read facts
   ansible.builtin.setup:
+    fact_path: "{{ fact_path }}"
     filter: ansible_local
 
 - name: Clear facts
