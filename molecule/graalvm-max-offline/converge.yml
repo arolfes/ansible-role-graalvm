@@ -31,6 +31,7 @@
       graalvm_use_local_archive: true
       graalvm_redis_filename: 'graalvm-ce-jdk-21.0.0.tar.gz'
       graalvm_redis_sha256sum: '6c422941ccc58be5b891bb6499feeb72cd2b74d6729a29bf1fb8cc1a7d58b319'
+      graalvm_add_to_path_of_root_user: true
 
   post_tasks:
     - name: verify graalvm facts
