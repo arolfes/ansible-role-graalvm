@@ -11,6 +11,10 @@
   ansible.builtin.include_tasks: write-environment-config.yml
   when: graalvm_is_default_installation|bool
 
+- name: export GRAALVM_HOME to root user
+  ansible.builtin.include_tasks: graalvm_to_root_user.yml
+  when: graalvm_is_default_installation|bool and graalvm_add_to_path_of_root_user|bool
+
 # Set GraalVM facts
 - name: Set fact_path variable if not configured
   ansible.builtin.set_fact:

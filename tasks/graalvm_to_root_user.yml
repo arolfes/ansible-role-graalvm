@@ -1,0 +1,24 @@
+---
+- name: Check /root/.bash_profile exists
+  become: yes
+  ansible.builtin.stat:
+    path: /root/.bashrc
+  register: root_has_bash
+  ignore_errors: yes
+  when: graalvm_is_default_installation|bool and graalvm_add_to_path_of_root_user|bool
+
+- name: export GRAALVM_HOME to /root/.bashrc
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    regexp: 'export GRAALVM_HOME='
+    line: "export GRAALVM_HOME='{{ graalvm_home }}'"
+  when: graalvm_is_default_installation|bool and graalvm_add_to_path_of_root_user|bool and root_has_bash.stat.exists
+
+- name: add GRAALVM_HOME to PATH variable in /root/.bashrc
+  become: yes
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    regexp: 'export PATH=${GRAALVM_HOME}/bin:'
+    line: "export PATH=${GRAALVM_HOME}/bin:${PATH}"
+  when: graalvm_is_default_installation|bool and graalvm_add_to_path_of_root_user|bool and root_has_bash.stat.exists

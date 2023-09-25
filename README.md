@@ -69,6 +69,11 @@ graalvm_download_dir: "{{ x_ansible_download_dir | default(ansible_env.HOME + '/
 # the GRAALVM_HOME environment variable
 graalvm_is_default_installation: true
 
+# If the graalvm bin directory should be added to PATH environment variable from ROOT user
+# Effect is only when this is also the default installation
+# and bash is available
+graalvm_add_to_path_of_root_user: false
+
 # If the graalvm bin directory should be added to PATH environment variable
 # Effect is only when this is also the default installation
 graalvm_add_to_path: true

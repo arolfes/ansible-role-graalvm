@@ -11,6 +11,7 @@
 
   roles:
     - role: ansible-role-graalvm
+      graalvm_add_to_path_of_root_user: true
 
   post_tasks:
     - name: Verify graalvm facts

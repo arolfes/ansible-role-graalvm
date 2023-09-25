@@ -69,3 +69,13 @@ def test_facts_installed(host, fact_group_name):
     assert fact_file.user == 'root'
     assert fact_file.group == 'root'
     assert oct(fact_file.mode) == '0o644'
+
+
+def test_graalvm_path_is_exported_to_root_user(host):
+    bash_profile_file = host.file('/root/.bashrc')
+
+    if bash_profile_file.exists == true:
+        cmd = host.run('. /root/.bashrc && java --version')
+        assert cmd.rc == 0
+        assert ' 21' in cmd.stdout
+        assert 'GraalVM CE' in cmd.stdout
