@@ -10,7 +10,7 @@ jobs:
   notify-ansible-galaxy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: robertdebock/galaxy-action@1.2.1
       with:
         galaxy_api_key: ${{ secrets.GALAXY_API_KEY }} 
