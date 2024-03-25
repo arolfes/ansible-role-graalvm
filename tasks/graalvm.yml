@@ -7,7 +7,7 @@
 - name: Assert java version supported
   ansible.builtin.assert:
     that:
-      - graalvm_java_version in ('17.0.7', '17.0.8', '20.0.1', '20.0.2', '21.0.0')
+      - graalvm_java_version in ('17.0.7', '17.0.8', '20.0.1', '20.0.2', '21.0.0', '21.0.2')
 
 - name: graalvm_architecture
   ansible.builtin.debug:

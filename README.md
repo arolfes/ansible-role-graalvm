@@ -56,8 +56,8 @@ are shown below):
 
 ```yaml
 # specify the underlying community jdk version
-# 17.0.7, 17.0.8, 20.0.1, 20.0.2 or 21.0.0
-graalvm_java_version: '21.0.0'
+# 17.0.7, 17.0.8, 20.0.1, 20.0.2, 21.0.0 or 21.0.2
+graalvm_java_version: '21.0.2'
 
 # Base installation directory for any GraalVM distribution
 graalvm_install_dir: '/opt/graalvm'
@@ -117,6 +117,7 @@ The following versions of graalvm community jdk are supported without any additi
 * 20.0.1
 * 20.0.2
 * 21.0.0
+* 21.0.2
 
 Supported architectures
 -----------------------
@@ -136,7 +137,7 @@ By default this role will install the latest GraalVM CE that has been tested and
 # results:
 # new file /etc/profile.d/graalvm.sh
 # content:
-# GRAALVM_HOME=/opt/graalvm/jdk-21.0.0
+# GRAALVM_HOME=/opt/graalvm/jdk-21.0.2
 # PATH=${GRAALVM_HOME}/bin:${PATH}
 ```
 
@@ -178,7 +179,7 @@ You can install the multiple versions of the GraalVM by using this role more tha
       graalvm_is_default_installation: false
       graalvm_fact_group_name: 'graalvm_java_17_0_7'
 
-    # the second role install graalvm-community-jdk-21.0.0 and is set as default GraalVM
+    # the second role install graalvm-community-jdk-21.0.2 and is set as default GraalVM
     - role: arolfes.graalvm
 ```
 
@@ -186,15 +187,15 @@ To perform an offline install, you need to specify a bit more information (i.e. 
 
 ```yaml
 # Before performing the offline install, download
-# `graalvm-community-jdk-21.0.0_linux-x64_bin.tar.gz` to
+# `graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz` to
 # `{{ playbook_dir }}/files/` on the local machine.
 - hosts: servers
   roles:
     - role: arolfes.graalvm
-      graalvm_java_version: '21.0.0'
+      graalvm_java_version: '21.0.2'
       graalvm_use_local_archive: true
-      graalvm_redis_filename: 'graalvm-community-jdk-21.0.0_linux-x64_bin.tar.gz'
-      graalvm_redis_sha256sum: '7627a40c11341f743e3d937efe4fd3115b18bb3ca39380513b31d6775512d5b0'
+      graalvm_redis_filename: 'graalvm-community-jdk-21.0.2_linux-x64_bin.tar.gz'
+      graalvm_redis_sha256sum: 'b048069aaa3a99b84f5b957b162cc181a32a4330cbc35402766363c5be76ae48'
 ```
 
 Role Facts
@@ -204,11 +205,11 @@ This role exports the following Ansible facts for use by other roles:
 
 * `ansible_local.graalvm.general.java_version`
 
-    * e.g. `21.0.0`
+    * e.g. `21.0.2`
 
 * `ansible_local.graalvm.general.home`
 
-    * e.g. `/opt/graalvm/jdk-21.0.0`
+    * e.g. `/opt/graalvm/jdk-21.0.2`
 
 Overriding `graalvm_fact_group_name` will change the names of the facts e.g.:
 
