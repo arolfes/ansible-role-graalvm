@@ -46,7 +46,7 @@ def test_graalvm_installed(host, version_dir_pattern):
 
     gu_file = host.file(graalvm_home + '/bin/gu')
     assert gu_file.exists
-    assert oct(gu_file.mode) == '0o777'
+    assert oct(gu_file.mode) == '0o755'
 
 
 def test_gu(host):
